@@ -1,0 +1,154 @@
+# Dialog for Chapter 1
+# refer to http://digitalnativestudios.com/textmeshpro/docs/rich-text/ for rich text tags. 
+# ~slow text~
+# (will maybe change them to stars and other symbols)
+# Structure:
+# @DIALOG_NAME
+#	[Speaker1|moodA] Line i
+#	[Speaker2|moodB] Line ii
+#	{Special Event} 
+# 	example: {Window|imageonly|shoutoku1000}
+# @@ <-- Dialog end
+## mood has to have same name as portrait image found in directory Resources/Sprites/Portraits/Speaker1/.
+## Line is ended by a newline.
+## Speaker's name also coincides with the voice file.
+## "Narrator" is a special speaker, no portrait (and no name) is displayed.
+## For thoughts/monologue, use brackets () or the mood "noimage"
+## Likewise "Window" shows a window
+## "CG" shows a CG.
+#
+
+
+@INTRO_CUTSCENE
+	[Narrator|noimage] Gensokyo accepts everyone. That is what the old wisdom says. 
+	[Narrator|noimage] Supposedly, no matter who or what you are, you will find a place for yourself in Gensokyo. 
+	[Narrator|noimage] On the surface, since the appearance of the great mansion on the shore of Misty Lake, this seems to hold.
+	[Narrator|noimage] However, not everyone would agree.
+	[Narrator|noimage] There are still some who remain unaccepted and without a place in the land of illusions.
+	[Narrator|noimage] Among them...
+	# zoom on Mima 
+	#{CG|mimavsmisumaru|zoom1}
+	[Mima|normal] ...
+	[Narrator|noimage] Mima.
+	[Narrator|noimage] The evil ghost magician that haunted the Hakurei Shrine.
+	[Narrator|noimage] She returns to take revenge and to remind Gensokyo she is still here!
+	#{CG|mimavsmisumaru|zoomOut1}
+	# zoom out, Mima drops Misumaru on the ground into some cave/dark room
+	[Mima|normal] You will make magatama for me, and plenty of them.
+	[Misumaru|angry] And what if I refuse?
+	[Mima|normal] Then... I will tell Reimu what you did to Genjii that time.
+	[Misumaru|angry] Tsk. As if she would believe someone the likes of you.
+	[Mima|normal] Oh, but it won't be me who will tell her. I will send a messenger she can't refuse.
+	[Misumaru|angry] No, you can't mean...
+	[Mima|normal] Oh yes. I will send ~<i>her</i>~.
+	[Mima|normal] The pretty purple-haired samurai. 
+	# in a thought bubble we see Sannyo, who throws away her clothes, revealing that she is in fact Meira
+	[Misumaru|angry] Noooooo!!!!! Poor Reimu is defenseless against her!
+	[Mima|normal] She will tell Reimu <i>everything</i> you did.
+	# Mima comes closer to Misumaru's ear
+	[Mima|normal] How Genjii suffered because you couldn't control your anger when he criticised your creations. 
+	[Mima|normal] Reimu will never call you <i>obaa-chan</i> again.
+	[Misumaru|angry] You wouldn't!
+	[Mima|normal] And you will be stuck hiding in that suffocating cave forever.
+	[Misumaru|away] *sob*
+	[Mima|normal] However, if you comply, I will make sure she never learns of your crimes.
+	[Misumaru|away] ~...~ 
+	[Mima|normal] She will continue to believe it was somebody else who did it. Then you can reunite with her, without any regrets.
+	[Misumaru|angry] ~...~ what colour do you want your magatama?
+	[Mima|normal] That's more like it. Gimme rainbow coloured. And get to work! I need plenty to sell, so that I can fund my greatest project. 
+	[Mima|normal] Gensokyo will tremble at the <i>Evilness</i> of my plan!!!
+	[Mima|normal] Misumaru, with your magatama, I will become rich! 
+	[Mima|normal] And with the money earned, I will construct a machine that will shake the very foundations of Gensokyo.
+	[Mima|normal] Oh yes, how exquisitely <b>evil</b>!
+	
+	@@
+
+# AAA
+
+@WIN_CUTSCENE
+	# {CG|mimavsmisumaru|zoom1}
+	[Mima|normal] Yes!
+	[Mima|normal] Yes! 
+	[Mima|normal] YES!!!
+	[Mima|normal] Thank you Rika. You did an excellent job.
+	[Mima|normal] Now Gensokyo will once again tremble before the might of <i>Mima</i>!!!
+	[Mima|normal] I hate all third characters. I don't even know who you are.
+	[Mima|normal] Back in my time, there were just Reimu, Marisa, and me who were playable characters. 
+	[Mima|normal] I know, we must sometimes invite some new blood into Touhou.
+	[Mima|normal] <size=200%><b>BUT 12 NEW GAMES AND I WASN'T INVITED INTO EVEN ONE?!?!?</b></size>
+	[Mima|normal] I am disappointed.
+	{CG|Z2|standard}
+	[Mima|noimage] What goes on in the Creator's mind???
+	[Mima|noimage] Has He forgotten me?
+	[Mima|noimage] Well, it doesn't matter anymore.
+	[Mima|noimage] Because with this, I can ensure I am playable myself!!!
+	{Sound|BEEEEEEEEEM|noblock}
+	{CG|Z2_inspired|standard}
+	[Mima|noimage] I will plant an image of myself into His mind, reminding Him that He <i>must</i> put me into the the next game.
+	[Mima|noimage] Screw you all!
+	[Mima|noimage] Zombie samurai, Vampire fetishist, Green Reimu,... enough of you!
+	[Mima|noimage] Now is <i>my</i> time to take the spotlight again.
+	{CG|TH19|standard}
+	{Sound|hapi|stopOther}
+	[Narrator|noimage] Congratulations! You win! 
+	[Narrator|noimage] Thank You for Playing.
+@@
+
+@LOSS_CUTSCENE
+	[Narrator|noimage] Somewhere in Gensokyo.
+	[Reimu|normal] We have you surrounded! Give it up Mima!
+	[Yukari|normal] What's all this then? I wake up only to find a fossil uprising?
+	[Mima|normal] Who are <i>you</i> calling a fossil?
+	[Yukari, 17 yrs old|normal] ~...~
+	[Mima|normal] Speaking of fossils - Reimu, do you know the truth about what happened to Genjii?
+	[Reimu|normal] He lost the ability to fly, so he just stays at the turtle pond right now.
+	[Mima|normal] But do you know why did he lose it?
+	[Reimu|normal] I always wondered about that. But what would you know about it?
+	[Mima|normal] Well, It just so happens that I was there when it happened. I'll tell you the whole story.
+	
+	[Narrator|noimage] Somewhere near the Hakurei Shrine, about twenty years ago.
+	[Genji|normal] The ability to create any scent you like? Are you serious? 
+	[Misumaru|normal] It can also turn into a cat! And you- you can eat sweets and not get fat!
+	[Genji|normal]  Reimu needs an anti-youkai weapon, not to make perfumes! It's completely useless!
+	[Misumaru|angry] Shut up you stupid turtle. 
+	{Sound|Grainy beep|noblock}
+	#*smacks Genjii with an orb and turns him on his back*
+	[Genji|flip] Why did you turn me on my back?
+	[Genji|flip] You know I can just fly away, right?
+	[Misumaru|normal] Not anymore, I sealed your ability to fly into this orb. Not so useless now, huh? 
+	[Genji|flip] You did- what?
+	[Misumaru|normal] What I said.
+	[Genji|flip] So another useless ability for fighting youkai.
+	[Misumaru|normal] You will understand eventually. Until then, goodbye.
+	[Genji|flip] Wait! Don't leave me here like this!
+	
+	[Reimu|normal] So Misumaru did it??? 
+	[Mima|normal] Precisely.
+	[Yukari|normal] As expected, she is <i>very</i> particular about her yin-yang orbs. Nobody can dare insult her art.
+	[Mima|normal] So you can see that I am not the real threat that's in Gensokyo right now. 
+	# Delay..
+	[Reimu|normal] ~...~ That's all?
+	[Mima|normal] You aren't angry? Your dear Genji was maimed by the cave-dwelling craftswoman and you don't care?
+	[Reimu|normal] Nah, I can live with that. 
+	[Mima|normal] What???
+	[Reimu|normal] I have more important things to deal with. For example a vengeful spirit to exterminate.
+	[Mima|normal] Noooooo!
+	# Mima Smack
+	
+	[Narrator|noimage] The Turtle Pond, near the Hakurei Shrine.
+	[Genji|normal] Misumaru, I don't really care anymore.
+	[Misumaru|normal] Really?
+	[Genji|normal] It happened so long ago that I can't bring myself to be angry about it.
+	[Genji|normal] Plus, it at least forced Reimu to actually train for once, when she didn't have me to fly on.
+	[Genji|normal] But it is true that I somewhat regret not being able on adventures with her.
+	[Misumaru|normal] I will give you the ability back.
+	[Genji|normal] No, I don't need it. 
+	[Misumaru|normal] Really? But what about...
+	[Genji|normal] But in turn, you go to the Shrine and take my place. Watch over Reimu from now on. Force her to train. 
+	[Genji|normal] Force her to train. I'm not strong enough to do so, she can beat me immediately now. But you-
+	[Misumaru|normal] Alright, I think I will manage that. 
+	[Misumaru|normal] She beat me once already, but I must ensure that the Yin-Yang Orb does not fall into the wrong hands!
+	[Narrator|normal] Bad Ending! Try to make 1000 G before 25 turns pass!
+	[Narrator|normal] Thank You for Playing.
+		
+@@
