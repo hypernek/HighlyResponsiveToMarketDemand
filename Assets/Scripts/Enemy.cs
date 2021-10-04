@@ -9,12 +9,11 @@ public class Enemy : MonoBehaviour
     public static UnityEvent event_enemyFlyCompleted = new UnityEvent();
     public AudioSource audioSource;
 
-    public ImageAnimator imageAnimator;
+    public SpriteRenderer enemySpriteRenderer;
+    public Animator enemyAnimator;
     public TooltipTrigger tooltipTrigger;
-    public Image enemyImage;
-    public Sprite[] poseSprites;
 
-    public RectTransform rectTransform;
+    public Transform enemyTransform;
     public float flyTime;
     public RectTransform SitePanel;
     public Transform ChosenSite;
@@ -37,9 +36,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        startPosition = rectTransform.anchoredPosition;
-        enemyImage = GetComponent<Image>();
-        enemyImage.sprite = poseSprites[0];
+        startPosition = enemyTransform.position;
     }
 
     public void Update()
@@ -118,17 +115,15 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator Attack(Vector2 targetPosition)
     {
-        enemyImage.sprite = poseSprites[2];
+        enemyAnimator.Play("move");
         tooltipTrigger.enabled = false;
-        imageAnimator.SwitchAnimation("move");
         Vector2 newAnchor = targetPosition;
         Debug.Log(string.Format("Flying to position ({0}; {1})", newAnchor.x, newAnchor.y));
-        LeanTween.move(rectTransform, newAnchor, flyTime).setOnComplete(() =>
+        LeanTween.move(enemyTransform.gameObject, newAnchor, flyTime).setOnComplete(() =>
         {
-            imageAnimator.SwitchAnimation("attack");
-            enemyImage.sprite = poseSprites[1];
+            enemyAnimator.Play("attack");
             audioSource.Play();
-            LeanTween.scale(rectTransform, new Vector3(1.0f, 1.0f, 1.0f), flyTime / 3).setOnComplete(
+            LeanTween.scale(enemyTransform.gameObject, new Vector3(1.0f, 1.0f, 1.0f), flyTime / 3).setOnComplete(
                 () => event_enemyFlyCompleted.Invoke()
                 );
         }).setEase(LeanTweenType.easeInCubic);
@@ -137,16 +132,18 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator FlyTo(Vector2 targetPosition, bool attack = false)//(RectTransform target)
     {
-        enemyImage.sprite = poseSprites[2];
+        enemyAnimator.SetBool("Moving", true);
         tooltipTrigger.enabled = false;
-        imageAnimator.SwitchAnimation("move");
         Vector2 newAnchor = targetPosition;
         Debug.Log(string.Format("Flying to position ({0}; {1})", newAnchor.x, newAnchor.y));
-        LeanTween.move(rectTransform, newAnchor, flyTime).setOnComplete(() => 
+        LeanTween.move(enemyTransform.gameObject, newAnchor, flyTime).setOnComplete(() => 
         {
             if(attack)
+            {
+                enemyAnimator.Play("attack");
                 audioSource.Play();
-            enemyImage.sprite = poseSprites[0];
+            }
+            enemyAnimator.SetBool("Moving", true);
             event_enemyFlyCompleted.Invoke();
         }).setEase(LeanTweenType.easeInCubic);
         yield return new WaitForSeconds(flyTime);
@@ -154,11 +151,14 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator GoHome()
     {
-        enemyImage.sprite = poseSprites[2];
+        enemyAnimator.Play("move");
         event_enemyFlyCompleted.RemoveAllListeners();
         Debug.Log(string.Format("Returning to Shrine"));
         event_enemyFlyCompleted.AddListener(
-            () => imageAnimator.SwitchAnimation("idle")
+            () =>
+            {
+                enemyAnimator.SetBool("Moving", false);
+            }
             );
         yield return FlyTo(startPosition);
         tooltipTrigger.enabled = true;
