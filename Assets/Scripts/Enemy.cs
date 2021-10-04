@@ -52,28 +52,26 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public IEnumerator Attack(Vector2 targetPosition)
+    public IEnumerator Attack(Vector3 targetPosition)
     {
         enemyAnimator.SetBool("Moving", true);
         tooltipTrigger.enabled = false;
-        Vector2 newAnchor = targetPosition;
+        Vector3 newAnchor = targetPosition;
         Debug.Log(string.Format("Attacking position ({0}; {1})", newAnchor.x, newAnchor.y));
         LeanTween.move(enemyTransform.gameObject, newAnchor, flyTime).setOnComplete(() =>
         {
             enemyAnimator.Play("attack");
             audioSource.Play();
-            LeanTween.scale(enemyTransform.gameObject, new Vector3(1.0f, 1.0f, 1.0f), flyTime / 3).setOnComplete(
-                () => event_enemyFlyCompleted.Invoke()
-                );
+            event_enemyFlyCompleted.Invoke();
         }).setEase(LeanTweenType.easeInCubic);
         yield return new WaitForSeconds(flyTime * 2);
     }
 
-    public IEnumerator FlyTo(Vector2 targetPosition, bool attack = false)//(RectTransform target)
+    public IEnumerator FlyTo(Vector3 targetPosition, bool attack = false)//(RectTransform target)
     {
         enemyAnimator.SetBool("Moving", true);
         tooltipTrigger.enabled = false;
-        Vector2 newAnchor = targetPosition;
+        Vector3 newAnchor = targetPosition;
         Debug.Log(string.Format("Flying to position ({0}; {1})", newAnchor.x, newAnchor.y));
         LeanTween.move(enemyTransform.gameObject, newAnchor, flyTime).setOnComplete(() => 
         {
@@ -90,7 +88,6 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator GoHome()
     {
-        enemyAnimator.Play("move");
         event_enemyFlyCompleted.RemoveAllListeners();
         Debug.Log(string.Format("Returning to Shrine"));
         event_enemyFlyCompleted.AddListener(

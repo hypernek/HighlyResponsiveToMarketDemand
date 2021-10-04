@@ -144,7 +144,7 @@ public class Site : MonoBehaviour
             {
                 RectTransform distractionRect = distraction.GetComponent<RectTransform>();
 
-                Vector2 target = Camera.main.ScreenToWorldPoint(distractionRect.transform.position);
+                Vector2 target = distractionRect.transform.position;
                 Debug.Log(string.Format("Attacking site distraction located at {0}, {1}", target.x, target.y));
                 yield return StartCoroutine(enemy.Attack(target));
 
@@ -162,7 +162,7 @@ public class Site : MonoBehaviour
                     if (outpostLevel > 0)
                     {
                         RectTransform outpostRect = outposts[outpostLevel - 1].GetComponent<RectTransform>();
-                        Vector2 target = Camera.main.ScreenToWorldPoint(outpostRect.transform.position);
+                        Vector2 target = outpostRect.transform.position;
                         Debug.Log(string.Format("Attacking site outpost located at {0}, {1}", target.x, target.y));
                         yield return StartCoroutine(enemy.Attack(target));
                         outposts[outpostLevel - 1].purchased = false;
