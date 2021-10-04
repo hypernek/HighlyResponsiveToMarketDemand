@@ -11,20 +11,33 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [Multiline()]
     public string tooltipContent;
 
+    // UI interactions
     public void OnPointerEnter(PointerEventData eventData)
     {
         delay = LeanTween.delayedCall(0.5f, () =>
         {
-            
             TooltipSystem.Show(tooltipContent, tooltipHeader);
         });
         
     }
-
     public void OnPointerExit(PointerEventData eventData)
     {
         LeanTween.cancel(delay.uniqueId);
         TooltipSystem.Hide();
     }
 
+
+    // World space interactions (collider required)
+    public void OnMouseEnter()
+    {
+        delay = LeanTween.delayedCall(0.5f, () =>
+        {
+            TooltipSystem.Show(tooltipContent, tooltipHeader);
+        });
+    }
+    public void OnMouseExit()
+    {
+        LeanTween.cancel(delay.uniqueId);
+        TooltipSystem.Hide();
+    }
 }

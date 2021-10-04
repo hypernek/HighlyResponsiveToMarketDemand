@@ -15,10 +15,6 @@ public class Enemy : MonoBehaviour
 
     public Transform enemyTransform;
     public float flyTime;
-    public RectTransform SitePanel;
-    public Transform ChosenSite;
-    public RectTransform ChosenDistraction;
-    public RectTransform ChosenOutpost1;
 
     private Vector3 startPosition;
     private static LTDescr move;
@@ -41,84 +37,27 @@ public class Enemy : MonoBehaviour
 
     public void Update()
     {
-        // this is how I found out how RectTransforms actually work
-        /*
         if(Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log(string.Format("Flying to SitePanel at anchored position ({0}; {1})", SitePanel.anchoredPosition.x, SitePanel.anchoredPosition.y));
-            move = LeanTween.move(rectTransform, SitePanel.anchoredPosition, flyTime);
+            enemyAnimator.Play("attack");
+            audioSource.Play();
         }
-        if(Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            Vector2 target = SitePanel.anchoredPosition + ChosenSite.anchoredPosition;
-            target.y -= -ChosenSite.rect.height / 2;
-            Debug.Log(string.Format("Flying to Site at anchored position ({0}; {1})", target.x, target.y));
-            move = LeanTween.move(rectTransform, target, flyTime);
+            enemyAnimator.SetBool("Moving", false);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Vector2 target = SitePanel.anchoredPosition + ChosenSite.anchoredPosition + ChosenSpecialPanel.anchoredPosition;
-            target.y += ChosenSite.rect.height / 2;
-            Debug.Log(string.Format("Flying to SpecialPanel at anchored position ({0}; {1})", target.x, target.y));
-            move = LeanTween.move(rectTransform, target, flyTime);
+            enemyAnimator.SetBool("Moving", true);
         }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Vector2 target = SitePanel.anchoredPosition + ChosenSite.anchoredPosition + ChosenOutpostPanel.anchoredPosition;
-            target.y -= -ChosenSite.rect.height / 2;
-            Debug.Log(string.Format("Flying to OutpostPanel at anchored position ({0}; {1})", target.x, target.y));
-            move = LeanTween.move(rectTransform, target, flyTime);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Vector2 target = SitePanel.anchoredPosition + ChosenSite.anchoredPosition + ChosenSpecialPanel.anchoredPosition + ChosenDistraction.anchoredPosition;
-            target.y += ChosenSite.rect.height / 2;
-            target.x -= ChosenSpecialPanel.rect.width / 2; 
-            Debug.Log(string.Format("Flying to Distraction at anchored position ({0}; {1})", target.x, target.y));
-            move = LeanTween.move(rectTransform, target, flyTime);
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Vector2 target = SitePanel.anchoredPosition + ChosenSite.anchoredPosition + ChosenOutpostPanel.anchoredPosition + ChosenOutpost1.anchoredPosition;
-            target.y += ChosenSite.rect.height / 2;
-            target.x -= ChosenOutpostPanel.rect.width / 2;
-            Debug.Log(string.Format("Flying to Outpost 1 at anchored position ({0}; {1})", target.x, target.y));
-            move = LeanTween.move(rectTransform, target, flyTime);
-        }
-        */
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            //Vector2 target = new Vector2(
-            //    ChosenSite.localPosition.x + ChosenDistraction.anchoredPosition.y,
-            //    ChosenSite.localPosition.y + ChosenDistraction.anchoredPosition.y
-            //    );
-            Vector2 target = ChosenSite.localPosition + ChosenDistraction.localPosition;
-            Debug.Log(string.Format("Flying to Distraction at anchored position ({0}; {1})", target.x, target.y));
-            StartCoroutine(FlyTo(target));
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            //Vector2 target = new Vector2(
-            //    ChosenSite.localPosition.x + ChosenOutpost1.anchoredPosition.y,
-            //    ChosenSite.localPosition.y + ChosenOutpost1.anchoredPosition.y
-            //    );
-            Vector2 target = ChosenSite.localPosition + ChosenOutpost1.localPosition;
-            Debug.Log(string.Format("Flying to Outpost at anchored position ({0}; {1})", target.x, target.y));
-            StartCoroutine(FlyTo(target));
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(GoHome());
-        }
-        
     }
 
     public IEnumerator Attack(Vector2 targetPosition)
     {
-        enemyAnimator.Play("move");
+        enemyAnimator.SetBool("Moving", true);
         tooltipTrigger.enabled = false;
         Vector2 newAnchor = targetPosition;
-        Debug.Log(string.Format("Flying to position ({0}; {1})", newAnchor.x, newAnchor.y));
+        Debug.Log(string.Format("Attacking position ({0}; {1})", newAnchor.x, newAnchor.y));
         LeanTween.move(enemyTransform.gameObject, newAnchor, flyTime).setOnComplete(() =>
         {
             enemyAnimator.Play("attack");
@@ -163,8 +102,5 @@ public class Enemy : MonoBehaviour
         yield return FlyTo(startPosition);
         tooltipTrigger.enabled = true;
     }
-
-    
-   
         
 }

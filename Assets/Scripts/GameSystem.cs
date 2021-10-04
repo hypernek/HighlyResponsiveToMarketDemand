@@ -31,6 +31,7 @@ public class GameSystem : MonoBehaviour
 
     [Header("GAME OBJECTS")]
     public Site[] gameSites;
+    public Enemy enemy;
     public Machine machine;
 
 
@@ -144,7 +145,7 @@ public class GameSystem : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            yield return StartCoroutine(gameSites[i].AttackSite(siteAttackStrengths[i]));
+            yield return StartCoroutine(gameSites[i].AttackSite(siteAttackStrengths[i], enemy));
         }
         gameSystemInteract.EnableUI();
         yield break;

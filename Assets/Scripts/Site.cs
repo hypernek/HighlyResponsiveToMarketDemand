@@ -132,7 +132,7 @@ public class Site : MonoBehaviour
         }
     }
 
-    public IEnumerator AttackSite(int attackStrength)
+    public IEnumerator AttackSite(int attackStrength, Enemy enemy)
     {
         if(attackStrength == 0)
         {
@@ -143,14 +143,11 @@ public class Site : MonoBehaviour
             if (hasDistraction)
             {
                 RectTransform distractionRect = distraction.GetComponent<RectTransform>();
-                //Debug.Log(string.Format("SitePanel anchoredPosition: ({0}; {1})", sitePanelRectTransform.anchoredPosition.x, sitePanelRectTransform.anchoredPosition.y));
-                //Debug.Log(string.Format("Site anchoredPosition: ({0}; {1})", siteRectTransform.anchoredPosition.x, siteRectTransform.anchoredPosition.y));
-                //Debug.Log(string.Format("specialPanel anchoredPosition: ({0}; {1})", specialPanel.anchoredPosition.x, specialPanel.anchoredPosition.y));
-                //Debug.Log(string.Format("distraction anchoredPosition: ({0}; {1})", distractionRect.anchoredPosition.x, distractionRect.anchoredPosition.y));
 
-                Vector2 target = siteTransform.localPosition + distractionRect.localPosition;
+                Vector2 target = Camera.main.ScreenToWorldPoint(distractionRect.transform.position);
+                Debug.Log(string.Format("Attacking site distraction located at {0}, {1}", target.x, target.y));
                 yield return StartCoroutine(enemy.Attack(target));
-                //enemy.event_enemyFlyCompleted.AddListener(() => StartCoroutine(enemy.GoHome()));
+
                 hasDistraction = false;
                 distraction.Demolish(string.Format("Prepare\nDistraction\n{0} G", gameSystem.distractionPrice));
                 Debug.Log(string.Format("Site {0} has Distraction, attack successfully prevented", siteName));
@@ -165,21 +162,9 @@ public class Site : MonoBehaviour
                     if (outpostLevel > 0)
                     {
                         RectTransform outpostRect = outposts[outpostLevel - 1].GetComponent<RectTransform>();
-                        // remove destroyed outpost
-                        //Debug.Log(string.Format("SitePanel anchoredPosition: ({0}; {1})", sitePanelRectTransform.anchoredPosition.x, sitePanelRectTransform.anchoredPosition.y));
-                        //Debug.Log(string.Format("Site anchoredPosition: ({0}; {1})", siteRectTransform.anchoredPosition.x, siteRectTransform.anchoredPosition.y));
-                        //Debug.Log(string.Format("outpostPanel anchoredPosition: ({0}; {1})", outpostPanel.anchoredPosition.x, outpostPanel.anchoredPosition.y));
-                        //Debug.Log(string.Format("outpost anchoredPosition: ({0}; {1})", outpostRect.anchoredPosition.x, outpostRect.anchoredPosition.y));
-
-                        //Vector2 target = sitePanelRectTransform.anchoredPosition +
-                        //                  siteRectTransform.anchoredPosition +
-                        //                  outpostPanel.anchoredPosition +
-                        //                  outpostRect.anchoredPosition;
-                        //target.y += siteRectTransform.rect.height / 2;
-                        //target.x -= outpostPanel.rect.width / 2;
-                        Vector2 target = siteTransform.localPosition + outpostRect.localPosition;
+                        Vector2 target = Camera.main.ScreenToWorldPoint(outpostRect.transform.position);
+                        Debug.Log(string.Format("Attacking site outpost located at {0}, {1}", target.x, target.y));
                         yield return StartCoroutine(enemy.Attack(target));
-                        //enemy.event_enemyFlyCompleted.AddListener(() => StartCoroutine(enemy.GoHome()));
                         outposts[outpostLevel - 1].purchased = false;
                         outposts[outpostLevel - 1].available = true;
                         if (outpostLevel != outposts.Length)
@@ -192,7 +177,6 @@ public class Site : MonoBehaviour
                     }
                     else
                     {
-                        //yield return enemy.FlyTo(outposts[0].GetComponent<RectTransform>().position);
 
                     }
 
