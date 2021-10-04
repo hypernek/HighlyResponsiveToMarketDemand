@@ -43,6 +43,9 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Build/
+Build*/
+HighlyResponsiveToMarketDemand.zip
 
 # Crashlytics generated file
 crashlytics-build.properties
